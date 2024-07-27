@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/laporan.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/laporan.js') }}" defer></script>
+</head>
+<body>
+    {% include "navbar.html" %}
+
+    <div class="container">
+        <header>
+            <h1>Ringkasan Transaksi Terbaru</h1>
+            <p>Informasi transaksi terbaru yang sudah dilakukan</p>
+        </header>
+        <main>
+            <section class="stats">
+                <h2>Grafik Penjualan</h2>
+                <div class="charts">
+                    <div class="chart">
+                        <canvas id="weeklySalesChart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <canvas id="monthlySalesChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            <section class="summary">
+                <h2>Ringkasan Keuangan</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <h3>Total Pendapatan</h3>
+                        <p>Rp. {{ total_sales }}</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Pengeluaran</h3>
+                        <p>Rp. {{ total_purchases }}</p>
+                    </div>
+                    <div class="card">
+                        <h3>Laba Bersih</h3>
+                        <p>Rp. {{ net_profit }}</p>
+                    </div>
+                </div>
+            </section>
+            <section class="report">
+                <h2>Menu Laporan</h2>
+                <button id="printReportButton">Cetak Laporan</button>
+                <div id="printReportModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h3>Cetak Laporan</h3>
+                        <form id="printReportForm">
+                            <label for="reportType">Jenis Laporan:</label>
+                            <select id="reportType" name="reportType">
+                                <option value="all">Semua</option>
+                                <option value="sales">Penjualan</option>
+                                <option value="purchases">Pembelian</option>
+                            </select>
+                            <label for="startDate">Tanggal Mulai:</label>
+                            <input type="date" id="startDate" name="startDate" required>
+                            <label for="endDate">Tanggal Selesai:</label>
+                            <input type="date" id="endDate" name="endDate" required>
+                            <button type="submit">Cetak</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const weeklySalesChart = JSON.parse('{{ weekly_sales_chart_data.labels | tojson }}');
+        const monthlySalesChart = JSON.parse('{{ monthly_sales_chart_data.labels | tojson }}');
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctxWeekly = document.getElementById('weeklySalesChart').getContext('2d');
+            var weeklySalesChart = new Chart(ctxWeekly, {
+                type: 'bar',
+                data: {
+                    labels: JSON.parse('{{ weekly_sales_chart_data.labels | tojson }}'),
+                    datasets: [{
+                        label: 'Jumlah Penjualan',
+                        data: JSON.parse('{{ weekly_sales_chart_data.data | tojson }}'),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+    
+            var ctxMonthly = document.getElementById('monthlySalesChart').getContext('2d');
+            var monthlySalesChart = new Chart(ctxMonthly, {
+                type: 'line',
+                data: {
+                    labels: JSON.parse('{{ monthly_sales_chart_data.labels | tojson }}'),
+                    datasets: [{
+                        label: 'Jumlah Penjualan',
+                        data: JSON.parse('{{ monthly_sales_chart_data.data | tojson }}'),
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+    
+            // Modal handling
+            var modal = document.getElementById("printReportModal");
+            var btn = document.getElementById("printReportButton");
+            var span = document.getElementsByClassName("close")[0];
+    
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+    
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+    
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+    
+            // Form submission
+            document.getElementById('printReportForm').onsubmit = function(event) {
+                event.preventDefault();
+                var reportType = document.getElementById('reportType').value;
+                var startDate = document.getElementById('startDate').value;
+                var endDate = document.getElementById('endDate').value;
+    
+                var url = '/print_report?reportType=' + reportType + '&startDate=' + startDate + '&endDate=' + endDate;
+                window.open(url, '_blank');
+            }
+        });
+    </script>
+    
+</body>
+</html>

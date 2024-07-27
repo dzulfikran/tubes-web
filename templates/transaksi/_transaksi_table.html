@@ -1,0 +1,15 @@
+{% for transaksi in transaksis %}
+    <tr>
+        <td>{{ transaksi.id }}</td>
+        <td>{{ transaksi.tanggal }}</td>
+        <td style="text-transform: capitalize;">{{ transaksi.jenis.value }}</td>
+        <td>{{ transaksi.total_harga }}</td>
+        <td>{{ transaksi.user.nama_pengguna }}</td>
+        <td>
+            <a href="{{ url_for('transaksi_detail', transaksi_id=transaksi.id) }}" class="detail-btn">📝</a>
+            <form action="{{ url_for('delete_transaksi', transaksi_id=transaksi.id) }}" method="POST" style="display:inline;">
+                <button type="submit">🗑️</button>
+            </form>
+        </td>
+    </tr>
+{% endfor %}

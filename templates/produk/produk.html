@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/produk/produk.css') }}">
+    <title>Produk</title>
+
+    <style>
+        .data-produk.grid-view .product-item {
+            display: inline-block;
+            width: 30%;
+            margin: 1%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-produk.table-view table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-produk.table-view table th,
+        .data-produk.table-view table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .data-produk.table-view table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+    <script>
+        function setGridView() {
+            document.getElementById('grid-view').style.display = 'block';
+            document.getElementById('table-view').style.display = 'none';
+        }
+
+        function setTableView() {
+            document.getElementById('grid-view').style.display = 'none';
+            document.getElementById('table-view').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    {% include "navbar.html" %}
+
+    <div class="container">
+        <header>
+            <h1>Daftar Produk</h1>
+            <p>Lihat semua produk yang tersedia</p>
+            <div class="search-bar">
+                <form action="{{ url_for('search_product') }}" method="get">
+                    <input type="text" name="query" placeholder="Nama Produk">
+                    <button class="search-button" type="submit" class="btn">Cari</button>
+                </form>
+            </div>
+        </header>
+        <a href="{{ url_for('new_product') }}" class="btn">Tambah Produk Baru</a>
+        <div class="view-switcher">
+            <button onclick="setGridView()">▦</button>
+            <button onclick="setTableView()">☰</button>
+        </div>
+        <div id="grid-view" class="data-produk grid-view">
+            {% for product in products %}
+                <div class="product-item">
+                    <a href="{{ url_for('product_detail', product_id=product['id']) }}">
+                        <div class="product-image">
+                            <img src="{{ url_for('static', filename='product_images/' + product.image) }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="product-info">
+                            <h2>{{ product.name }}</h2>
+                            <p>{{ product.category }}</p>
+                            <p>Rp. {{ product.harga_jual }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="table-view" class="data-produk table-view" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama Produk</th>
+                        <th>Kategori</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>Rp. {{ product.harga_jual }}</td>
+                            <td>Rp. {{ product.harga_beli }}</td>
+                            <td style="text-align: center;"><a href="{{ url_for('product_detail', product_id=product['id']) }}" class="detail-produk">📝</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- <div class="container">
+        <header>
+            <h1>Daftar Produk</h1>
+            <p>Lihat semua produk yang tersedia</p>
+            <div class="search-bar">
+                <form action="{{ url_for('search_product') }}" method="get">
+                    <input type="text" name="query" placeholder="Nama Produk">
+                    <button class="search-button" type="submit" class="btn">Cari</button>
+                </form>
+            </div>
+        </header>
+        <a href="{{ url_for('new_product') }}" class="btn">Tambah Produk Baru</a>
+        <h2>Daftar Produk</h2>
+        <section class="data-produk">
+            {% for product in products %}
+                <div class="product-item">
+                    <a href="{{ url_for('product_detail', product_id=product['id']) }}">
+                        <div class="product-image">
+                            <img src="{{ url_for('static', filename='product_images/' + product.image) }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="product-info">
+                            <h2>{{ product.name }}</h2>
+                            <p>{{ product.category }}</p>
+                            <p>Rp. {{ product.harga_jual }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </section>
+    </div> -->
+</body>
+</html>

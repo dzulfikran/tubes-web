@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/produk/styles-product.css') }}">
+
+    <script>
+        function fetchSuggestions(query) {
+            fetch(`/suggest_categories?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestionBox = document.getElementById('suggestions');
+                    suggestionBox.innerHTML = '';
+                    data.forEach(category => {
+                        const option = document.createElement('div');
+                        option.className = 'suggestion';
+                        option.innerText = category;
+                        option.onclick = () => {
+                            document.getElementById('category').value = category;
+                            suggestionBox.innerHTML = '';
+                        };
+                        suggestionBox.appendChild(option);
+                    });
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryInput = document.getElementById('category');
+            categoryInput.addEventListener('input', () => {
+                const query = categoryInput.value;
+                if (query.length > 0) {
+                    fetchSuggestions(query);
+                } else {
+                    document.getElementById('suggestions').innerHTML = '';
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .suggestion {
+            cursor: pointer;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .suggestion:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+
+</head>
+<body>
+    {% include "navbar.html" %}
+    <header>
+        <h1>Tambah Produk Baru</h1>
+        <p>Masukkan informasi produk yang baru</p>
+    </header>
+    <a href="{{ url_for('produk') }}" class="back-btn">Kembali ke Daftar Produk</a>
+    <div class="container">       
+        <form action="{{ url_for('new_product') }}" method="post" enctype="multipart/form-data">
+            <label for="name">Nama Produk</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="description">Deskripsi</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="harga_beli">Harga Beli</label>
+            <input type="number" id="harga_beli" name="harga_beli" required>
+            
+            <label for="harga_jual">Harga Jual</label>
+            <input type="number" id="harga_jual" name="harga_jual" required>
+            
+            <label for="category">Kategori</label>
+            <input type="text" id="category" name="category" required>
+            <div id="suggestions" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto;"></div>
+            <!-- <select id="category" name="category" required>
+                <option value="Baju Anak-Anak">Baju Anak-Anak</option>
+                <option value="Baju Dewasa">Baju Dewasa</option>
+                <option value="Mainan">Mainan</option>
+            </select> -->
+            
+            <label for="image">Gambar Produk</label>
+            <input type="file" id="image" name="image" required>
+            
+            <button type="submit">Tambah Produk</button>
+        </form>
+    </div>
+</body>
+</html>

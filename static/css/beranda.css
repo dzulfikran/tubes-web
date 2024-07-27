@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    /* padding: 0 20px; */
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding-bottom: 20px; /* Adjusted padding for better appearance */
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    padding-bottom: 10px;
+}
+
+header p {
+    margin: 0;
+    font-size: 14px;
+}
+
+main {
+    padding: 20px 0; /* Adjusted padding for better appearance */
+}
+
+.stats {
+    margin: auto;
+    max-width: 1200px; /* Constrain the width for better readability on large screens */
+}
+
+.stats h2 {
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.stats-cards {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 45%; /* Adjusted to better fit smaller screens */
+    margin: 10px 0; /* Added margin for better spacing */
+    text-align: center;
+}
+
+.chart {
+    width: 100%;
+    max-width: 1000px; /* Constrain the width for better readability on large screens */
+    margin: 40px auto; /* Adjusted margin for better spacing */
+    text-align: center;
+}
+
+canvas {
+    width: 100% !important; /* Ensure the canvas takes full width */
+    height: auto !important; /* Maintain aspect ratio */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .stats-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%; /* Adjusted to better fit smaller screens */
+    }
+
+    .chart {
+        max-width: 80%; /* Ensure chart is full width on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 20px;
+    }
+
+    header p {
+        font-size: 12px;
+    }
+
+    .card {
+        width: 80%; /* Full width on very small screens */
+    }
+}

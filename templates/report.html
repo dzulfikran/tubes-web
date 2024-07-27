@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Transaksi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .report-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .report-header h1 {
+            margin: 0;
+        }
+        .report-header p {
+            margin: 0;
+        }
+        .report-content {
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <h1>Laporan Transaksi</h1>
+        <p>Jenis Laporan: {{ 'Semua' if report_type == 'all' else 'Penjualan' if report_type == 'sales' else 'Pembelian' }}</p>
+        <p>Periode: {{ start_date }} - {{ end_date }}</p>
+    </div>
+    <div class="report-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Jenis Transaksi</th>
+                    <th>Total Harga</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaksi in transactions %}
+                <tr>
+                    <td>{{ transaksi.tanggal }}</td>
+                    <td>{{ 'Penjualan' if transaksi.jenis == 'penjualan' else 'Pembelian' }}</td>
+                    <td>{{ transaksi.total_harga }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total</td>
+                    <td>{{ total_price }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

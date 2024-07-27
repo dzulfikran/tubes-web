@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/beranda.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <title>Beranda</title>
+</head>
+<body>
+    {% include "navbar.html" %}
+    
+    <div class="container">
+        <header>
+            <h1>TOKO ISMAN</h1>
+            <p>Informasi penjualan harian dan bulanan</p>
+        </header>
+
+        <main>
+            <section class="stats">
+                <h2>Statistik Penjualan</h2>
+                <div class="stats-cards">
+                    <div class="card">
+                        <p>Penjualan Harian</p>
+                        <p>{{ daily_sales }}</p>
+                    </div>
+                    <div class="card">
+                        <p>Penjualan Bulanan</p>
+                        <p>{{ monthly_sales }}</p>
+                    </div>
+                </div>
+                <div class="chart">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const salesChartData = JSON.parse('{{ sales_chart_data | tojson | safe }}');
+    </script>
+</body>
+</html>
