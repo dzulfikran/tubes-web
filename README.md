@@ -112,27 +112,27 @@ Berikut adalah struktur direktori dari proyek:
 - **Masalah Koneksi Database:** Pastikan kredensial database di `config.py` benar dan server MySQL berjalan.
 - **Dependensi Tidak Terpasang:** Pastikan virtual environment aktif dan jalankan `pip install -r requirements.txt` lagi.
 
-### 9. Mengimpor Database menggunakan phpMyAdmin
+### 8. Mengimpor Database menggunakan phpMyAdmin
 
 Untuk mengimpor database `not_is.sql` menggunakan phpMyAdmin, ikuti langkah-langkah berikut:
 
-#### 9.1. Akses phpMyAdmin
+#### 8.1. Akses phpMyAdmin
 1. Buka browser web Anda.
 2. Akses phpMyAdmin melalui URL `http://localhost/phpmyadmin`.
 
-#### 9.2. Buat Database Baru
+#### 8.2. Buat Database Baru
 1. Setelah masuk ke phpMyAdmin, klik pada tab **"Databases"**.
 2. Di bawah **"Create database"**, masukkan nama database sebagai `not_is`.
 3. Klik tombol **"Create"**.
 
-#### 9.3. Impor File SQL
+#### 8.3. Impor File SQL
 1. Pilih database `not_is` yang baru saja dibuat dari daftar di sebelah kiri.
 2. Klik pada tab **"Import"** di bagian atas.
 3. Di bagian **"File to import"**, klik tombol **"Browse"** dan pilih file `not_is.sql` dari sistem Anda.
 4. Pastikan format file adalah SQL.
 5. Klik tombol **"Go"** untuk memulai proses impor.
 
-#### 9.4. Konfirmasi Impor
+#### 8.4. Konfirmasi Impor
 1. Setelah impor selesai, Anda akan melihat pesan sukses.
 2. Klik pada tab **"Structure"** untuk melihat daftar tabel yang diimpor ke dalam database `not_is`.
 
