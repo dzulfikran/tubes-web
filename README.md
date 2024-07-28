@@ -1,12 +1,12 @@
 ## Panduan Penggunaan Aplikasi Notis Berbasis Web
 
 ### Akun Pemilik
-# username : isman
-# password : isman1234
+#### username : isman
+#### password : isman1234
 
 ### Akun Karyawan
-# username : dzull
-# password : dzull123
+#### username : dzull
+#### password : dzull123
 
 ### 1. Pendahuluan
 Aplikasi Notis adalah aplikasi berbasis web yang dibangun menggunakan framework Flask dengan database MySQL. Aplikasi ini memungkinkan pengguna untuk melakukan manajemen produk, transaksi, dan pengguna. Panduan ini akan memberikan langkah-langkah untuk menginstalasi dan menjalankan aplikasi ini di localhost.
